@@ -1,5 +1,7 @@
 using Event_Ease.Data;
+using Event_Ease.Services;
 using Microsoft.EntityFrameworkCore;
+using Event_Ease.Services;
 
 namespace Event_Ease
 {
@@ -9,8 +11,8 @@ namespace Event_Ease
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-            // Add services to the container.
+            //Add services to the container.
+            builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
