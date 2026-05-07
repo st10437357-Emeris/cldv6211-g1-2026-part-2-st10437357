@@ -63,7 +63,7 @@ namespace Event_Ease.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] // Security measure to prevent Cross-Site Request Forgery (CSRF) (Microsoft, 2026d).
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,ImageFile")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,EventDate,ImageFile")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace Event_Ease.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,ImageUrl,ImageFile")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,EventDate,ImageUrl,ImageFile")] Event @event)
         {
             if (id != @event.Id) return NotFound();
 

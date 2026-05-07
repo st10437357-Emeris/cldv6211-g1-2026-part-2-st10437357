@@ -147,6 +147,40 @@ namespace Event_Ease.Controllers
             return View(booking);
         }
 
+        // --- NEW DELETE METHODS ADDED HERE ---
+
+        // GET: Bookings/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+
+            // Include related data so the user can see what they are deleting
+            var booking = await _context.Bookings
+                .Include(b => b.Event)
+                .Include(b => b.Venue)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (booking == null) return NotFound();
+
+            return View(booking);
+        }
+
+        // POST: Bookings/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking != null)
+            {
+                _context.Bookings.Remove(booking);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // --- END OF NEW DELETE METHODS ---
+
         private bool BookingExists(int id)
         {
             return _context.Bookings.Any(e => e.Id == id);
